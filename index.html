@@ -45,7 +45,141 @@
 	</ol></span>
 </body>
 </html>
-<script src="script.js"></script>
+<script>
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
+
+function draw() {
+	// Floating Mountain 
+	let fMounLimit = 2;
+
+	for(let i = 0; i <= fMounLimit; i++) {
+		let fMounX = Math.round(Math.random() * 600 + 1);
+		let fMounHeight = Math.round(Math.random() * 600 + 1);
+		let fMounWidth = Math.round(Math.random() * 300 + 1);
+
+		if (fMounHeight >= 400) {
+			fMounHeight -= 100;
+		} else if (fMounWidth <= 35) {
+			fMounWidth += 40;
+		}
+
+		ctx.fillStyle = '#EDECEC';
+		ctx.fillRect(fMounX, 100, fMounWidth, fMounHeight);
+	}
+
+	// Grass
+	ctx.fillStyle = '#10AF4C';
+	ctx.fillRect(0, 500, 600, 600);
+
+	// Tree
+	let treeLimit = 8;
+
+	for(let i = 0; i <= treeLimit; i++) {
+		// Wood
+
+		let treePositionX = Math.round(Math.random() * 500 + 1);
+
+		ctx.fillStyle = '#B3820D';
+		ctx.fillRect(treePositionX, 440, 10, 60);
+
+		// Leaves
+
+		let leavesPositionX = treePositionX - 10;
+
+		ctx.fillStyle = '#3AFF25';
+		ctx.fillRect(leavesPositionX, 440, 30, 30);
+	}
+
+	// Awan (Sama aja kayak diatas yang tree)
+
+	let cloudLimit = 4;
+
+	for(let i = 0; i <= cloudLimit; i++) {
+		let cloudPositionX = Math.round(Math.random() * 600 + 1);
+		let cloudPositionY = Math.round(Math.random() * 60 + 1);
+		let cloudWidth = Math.round(Math.random() * 120 + 1);
+		let cloudHeight = Math.round(Math.random() * 90 + 1);
+
+		if (cloudWidth <= 25) {
+			cloudWidth += 30;
+		} else if (cloudHeight <= 25) {
+			cloudHeight += 30;
+		}
+
+		ctx.fillStyle = '#F6F6F6';
+		ctx.fillRect(cloudPositionX, cloudPositionY, cloudWidth, cloudHeight, 10);
+	}
+}
+function player() {
+	let xPos = Math.round(Math.random() * 600 + 1);
+	let yPos = 480;
+	let speed = 5;
+	let limit = Math.round(Math.random() * 550 + 1);
+
+	if (limit <= 15) {
+		limit += 150;
+	}
+
+	function checkLimit() {
+		if (limit == 0) {
+			alert('You has no Limit!');
+			let selesai = confirm('Continue or Quit? Ok (Continue) Cancel (Quit)');
+
+			if (selesai === true) {
+				document.location.reload(true);
+			} else {
+				alert('Thank for playing this little Game');
+
+				this.location.href = 'https://www.google.com';
+			}
+		}
+	}
+
+	function playerDraw() {
+		ctx.fillStyle = '#FEFF91';
+		ctx.fillRect(xPos, yPos, 20, 20);
+	}
+
+	playerDraw();
+	this.addEventListener('keydown', move, false);
+
+	function move(event) {
+		if (event.keyCode == '65' || event.keyCode == '37') {
+			xPos -= speed;
+			limit -= 1;
+
+			playerDraw();
+			checkLimit();
+		} else if (event.keyCode == '68' || event.keyCode == '39') {
+			xPos += speed;
+			limit -= 1;
+
+			playerDraw();
+			checkLimit();
+		} else if (event.keyCode == '87' || event.keyCode == '38') {
+			yPos -= speed;
+			limit -= 1;
+
+			playerDraw();
+			checkLimit();
+		} else if (event.keyCode == '83' || event.keyCode == '40') {
+			yPos += speed;
+			limit -= 1;
+
+			playerDraw();
+			checkLimit();
+		}
+
+		if (event.keyCode == '13') {
+			document.location.reload(true);
+		}
+	}
+}
+
+draw();
+player();
+</script>
 
 
 
